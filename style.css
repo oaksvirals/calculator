@@ -1,0 +1,73 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    padding-top: 100px;
+}
+
+.by {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    padding: 100px;
+}
+
+.calculator {
+    background-color: #3c3c3c;
+    padding: 25px;
+    max-width: 400px;
+    border-radius: 8px;
+}
+
+.display {
+    background-color: gray;
+    color: #ffffff;
+    text-align: right;
+    font-size: 30px;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.buttons button {
+    width: 80px;
+    height: 80px;
+    font-size: 22px;
+    margin: 2px;
+}
+
+#zero {
+    width: 164px;
+}
+
+#divide,
+#multiply,
+#subtract,
+#add,
+#equal {
+    background-color: aquamarine;
+}
+
+#AC,
+#negPos,
+#percent {
+    background-color: beige;
+}
+
+.numbers,
+#decimal {
+    background-color: aliceblue;
+}
