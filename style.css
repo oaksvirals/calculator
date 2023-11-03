@@ -23,6 +23,7 @@ h1 {
     background-color: #3c3c3c;
     padding: 25px;
     max-width: 400px;
+    min-width: 400px;
     border-radius: 8px;
 }
 
@@ -33,6 +34,11 @@ h1 {
     font-size: 30px;
     padding: 20px;
     border-radius: 8px;
+    height: 100px;
+}
+
+.display .previous {
+    font-size: 30px;
 }
 
 .buttons {
@@ -67,7 +73,7 @@ h1 {
     background-color: beige;
 }
 
-.numbers,
+.number,
 #decimal {
     background-color: aliceblue;
 }

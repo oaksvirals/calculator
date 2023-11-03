@@ -1,178 +1,124 @@
-// Project Point 1) Basic Math Functions
+// Global Operators
+let operator = '';
+let previousValue = '';
+let currentValue = '';
 
-function add(a, b) { // working on getting adding to work after initial addition, then pass onto other math functions
-    calcValue = a + b;
-    console.log(numberA);
-    console.log(numberB);
-    console.log(calcValue);
-    displayValue = '';
+// Storing Components
+const clear = document.querySelector('#AC');
+const equal = document.querySelector('#equal');
+const decimal = document.querySelector('#decimal');
+const percent = document.querySelector('#percent');
+const negPos = document.querySelector('#negPos');
+
+const numbers = document.querySelectorAll('.number');
+const operators = document.querySelectorAll('.operator');
+
+const previousScreen = document.querySelector('.previous');
+const currentScreen = document.querySelector('.current');
+
+// numbers
+numbers.forEach((number) => number.addEventListener('click', (e) => {
+    handleNumber(e.target.textContent);
+    currentScreen.textContent = currentValue;
+}));
+
+// operators
+operators.forEach((op) => op.addEventListener('click', (e) => {
+    handleOperator(e.target.textContent);
+    previousScreen.textContent = previousValue + ' ' + operator;
+    currentScreen.textContent = currentValue;
+}));
+
+// clear button
+clear.addEventListener('click', () => {
+    previousValue = '';
+    currentValue = '';
     operator = '';
-    console.log(operator);
-    display(calcValue);
-    displayValue = '';
-};
+    previousScreen.textContent = currentValue;
+    currentScreen.textContent = currentValue;
+});
 
-function subtract(a, b) {
-    displayValue = '';
-    operator = '';
-    display(a - b);
-    displayValue = '';
-};
+// equal
+equal.addEventListener('click', () => {
+    if (currentValue != '' && previousValue != '') {
+        calculate();
+        previousScreen.textContent = '';
+        if (previousValue.length >= 9) {
+            currentScreen.textContent = previousValue.slice(0, 9) + '...';
+        } else {
+            currentScreen.textContent = previousValue;
+        };
+    }
+});
 
-function multiply(a, b) {
-    displayValue = '';
-    operator = '';
-    display(a * b);
-    displayValue = '';
-};
+// decimal
+decimal.addEventListener('click', () => {
+    addDecimal();
+});
 
-function divide(a, b) {
-    displayValue = '';
-    operator = '';
-    display(a / b);
-    displayValue = '';
-};
+// percent
 
-// Project Point 2) Operation Variables
+percent.addEventListener('click', () => {
+    addPercent();
+    currentScreen.textContent = currentValue;
+});
 
-let numberA = 0;
-let numberB = 0;
-let operator = ''; // +, -, *, /
-let calcValue = null;
+// negative positive
+negPos.addEventListener('click', () => {
+    addNegPos();
+    currentScreen.textContent = currentValue;
+});
 
-// Project Point 3) Operate Function
-
-function operate(operator, numberA, numberB) {
-
-    return operator === '+' ? add(numberA, numberB)
-    : operator === '-' ? subtract(numberA, numberB)
-    : operator === '*' ? multiply(numberA, numberB)
-    : operator === '/' ? divide(numberA, numberB)
-    : 'error performing operate function';
-};
-
-// Project Point 4) Self note for project. Create basic HTML calculator.
-
-// Project Point 5) Function to populate display when number button is clicked, store number in variable display value
-
-const numDisplay = document.querySelector('.numDisplay');
-
-let displayValue = '';
-
-function display(num) {
-    if (displayValue === '0') {
-        displayValue = '';
+// functions
+function handleNumber(num) {
+    if(currentValue.length <= 9) {
+        currentValue += num;
     };
-
-    displayValue += num;
-    numDisplay.textContent = displayValue;
 };
 
-// Project Point 6) Making Calculator Work
+function handleOperator(op) {
+    operator = op;
+    previousValue = currentValue;
+    currentValue = '';
+};
 
-const numOne = document.querySelector('#one');
-const numTwo = document.querySelector('#two');
-const numThree = document.querySelector('#three');
-const numFour = document.querySelector('#four');
-const numFive = document.querySelector('#five');
-const numSix = document.querySelector('#six');
-const numSeven = document.querySelector('#seven');
-const numEight = document.querySelector('#eight');
-const numNine = document.querySelector('#nine');
-const numZero = document.querySelector('#zero');
+function calculate() {
+    previousValue = Number(previousValue);
+    currentValue = Number(currentValue);
 
-numOne.addEventListener('click', () => {
-    display(1);
-});
-numTwo.addEventListener('click', () => {
-    display(2);
-});
-numThree.addEventListener('click', () => {
-    display(3);
-});
-numFour.addEventListener('click', () => {
-    display(4);
-});
-numFive.addEventListener('click', () => {
-    display(5);
-});
-numSix.addEventListener('click', () => {
-    display(6);
-});
-numSeven.addEventListener('click', () => {
-    display(7);
-});
-numEight.addEventListener('click', () => {
-    display(8);
-});
-numNine.addEventListener('click', () => {
-    display(9);
-});
-numZero.addEventListener('click', () => {
-    display(0);
-});
-
-const opAdd = document.querySelector('#add');
-const opSubtract = document.querySelector('#subtract');
-const opMultiply = document.querySelector('#multiply');
-const opDivide = document.querySelector('#divide');
-
-opAdd.addEventListener('click', () => {
-    // first if: setup for allowing continued calculations without overwriting previous number
-    if(displayValue === '' & calcValue !== null) {
-        numberA = calcValue;
-        console.log(numberA, '< opAdd numberA from if')
-        displayValue = '';
-        operator = '+';
+    if (operator === '+') {
+        previousValue += currentValue;
+    } else if (operator === '-') {
+        previousValue -= currentValue;
+    } else if (operator === '*') {
+        previousValue *= currentValue;
     } else {
-        numberA = Number(displayValue);
-        console.log(numberA, '< opAdd numberA from else')
-        displayValue = '';
-        operator = '+';
+        previousValue /= currentValue;
     };
-});
-opSubtract.addEventListener('click', () => {
-    numberA = Number(displayValue);
-    displayValue = '';
-    operator = '-';
-});
-opMultiply.addEventListener('click', () => {
-    numberA = Number(displayValue);
-    displayValue = '';
-    operator = '*';
-});
-opDivide.addEventListener('click', () => {
-    numberA = Number(displayValue);
-    displayValue = '';
-    operator = '/';
-});
 
-const opEquals = document.querySelector('#equal');
-const opClear = document.querySelector('#AC');
-const opNegPos = document.querySelector('#negPos');
-const opPercent = document.querySelector('#percent');
+    previousValue = roundNumber(previousValue);
+    previousValue = previousValue.toString();
+    currentValue = previousValue.toString();
+};
 
-opEquals.addEventListener('click', () => {
-    numberB = Number(displayValue);
-    console.log(numberB, '< opEquals numberB')
+function roundNumber(num) {
+    return Math.round(num * 1000) / 1000;
+};
 
-    return operator === '+' ? add(numberA, numberB)
-    : operator === '-' ? subtract(numberA, numberB)
-    : operator === '*' ? multiply(numberA, numberB)
-    : operator === '/' ? divide(numberA, numberB)
-    : 'error with equals'
-});
-opClear.addEventListener('click', () => {
-    numberA = 0;
-    numberB = 0;
-    operator = '';
-    calcValue = null;
-    displayValue = '0';
-    numDisplay.textContent = displayValue;
-});
-// opNegPos.addEventListener('click', () => {
-    
-// });
-// opPercent.addEventListener('click', () => {
+function addDecimal() {
+    if (!currentValue.includes('.')) {
+        currentValue += '.';
+    }
+};
 
-// });
+function addPercent() {
+    currentValue = currentValue / 100;
+};
+
+function addNegPos() {
+    if (!currentValue.includes('-')) {
+        currentValue = '-' + currentValue;
+    } else if (currentValue.includes('-')) {
+        currentValue = currentValue.replace('-', '');
+    };
+};
