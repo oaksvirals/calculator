@@ -4,8 +4,10 @@ function add(a, b) { // working on getting adding to work after initial addition
     calcValue = a + b;
     console.log(numberA);
     console.log(numberB);
+    console.log(calcValue);
     displayValue = '';
     operator = '';
+    console.log(operator);
     display(calcValue);
     displayValue = '';
 };
@@ -116,9 +118,18 @@ const opMultiply = document.querySelector('#multiply');
 const opDivide = document.querySelector('#divide');
 
 opAdd.addEventListener('click', () => {
-    numberA = Number(displayValue);
-    displayValue = '';
-    operator = '+';
+    // first if: setup for allowing continued calculations without overwriting previous number
+    if(displayValue === '' & calcValue !== null) {
+        numberA = calcValue;
+        console.log(numberA, '< opAdd numberA from if')
+        displayValue = '';
+        operator = '+';
+    } else {
+        numberA = Number(displayValue);
+        console.log(numberA, '< opAdd numberA from else')
+        displayValue = '';
+        operator = '+';
+    };
 });
 opSubtract.addEventListener('click', () => {
     numberA = Number(displayValue);
@@ -143,6 +154,7 @@ const opPercent = document.querySelector('#percent');
 
 opEquals.addEventListener('click', () => {
     numberB = Number(displayValue);
+    console.log(numberB, '< opEquals numberB')
 
     return operator === '+' ? add(numberA, numberB)
     : operator === '-' ? subtract(numberA, numberB)
@@ -158,9 +170,9 @@ opClear.addEventListener('click', () => {
     displayValue = '0';
     numDisplay.textContent = displayValue;
 });
-opNegPos.addEventListener('click', () => {
+// opNegPos.addEventListener('click', () => {
     
-});
-opPercent.addEventListener('click', () => {
+// });
+// opPercent.addEventListener('click', () => {
 
-});
+// });
