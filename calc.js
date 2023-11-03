@@ -1,6 +1,9 @@
 // Project Point 1) Basic Math Functions
 
-function add(a, b) {
+function add(a, b) { // working on getting adding to work after initial addition
+    calcValue = a + b;
+    console.log(numberA);
+    console.log(numberB);
     displayValue = '';
     operator = '';
     display(a + b);
@@ -33,6 +36,7 @@ function divide(a, b) {
 let numberA = 0;
 let numberB = 0;
 let operator = ''; // +, -, *, /
+let calcValue = 0;
 
 // Project Point 3) Operate Function
 
@@ -150,6 +154,7 @@ opClear.addEventListener('click', () => {
     numberA = 0;
     numberB = 0;
     operator = '';
+    calcValue = 0;
     displayValue = '0';
     numDisplay.textContent = displayValue;
 });
